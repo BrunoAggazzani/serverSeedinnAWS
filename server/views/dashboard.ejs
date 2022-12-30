@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/favicon-32x32.png" type="png" sizes="32">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script crossorigin="anonymous" src="https://cdn.socket.io/4.5.4/socket.io.min.js" integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"></script>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="form-containner">
+        <div id="containner">
+            <h2>Tablero de control de <%= data.name.replaceAll('_', '') %> </h2>
+            <hr>
+            <div id="buttons">
+                <button id="btn1" class="btn-off" onclick="click('btn1')">PRESS</button>
+                <br>
+                <button id="btn2" class="btn-off" onclick="click('btn2')">PRESS</button>
+                <br>
+                <button id="btn3" class="btn-off" onclick="click('btn3')">PRESS</button>
+                <br>
+            </div>
+        </div>
+    </div>
+    <script>
+        var socket = io.connect("http://localhost:24180", { forceNew: true });
+        socket.emit('device', '<%=data.name%>');
+        function click(btn) {
+            if (btn == 'btn1'){
+                socket.emit('btnAction', {device: <%=data.name%>, btn: btn});
+            }
+        }
+
+    </script>
+</body>
+
+</html>

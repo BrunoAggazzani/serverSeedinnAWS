@@ -1,0 +1,64 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0%;
+    padding: 0%;
+    background-color: rgba(44, 97, 99, 0.993);
+}
+
+#containner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+}
+
+#devices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    width: 70%;
+}
+
+#discovery{
+    width: 50%;
+}
+
+h2{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+hr{
+    width: 80%;
+    color: aquamarine;
+    height: 2px;
+    border-style: hidden;
+    background-color: lightskyblue;
+}
+
+p{
+    background-image: radial-gradient( rgb(0, 119, 255), rgba(27, 189, 121, 0));
+    width: 100%;
+    align-content: center;
+    text-align: center;
+}
+
+#btn-device{
+    background-image: radial-gradient( rgb(14, 14, 14), rgb(55, 101, 102));
+    width: 100%;
+    align-content: center;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 0.5em;
+}

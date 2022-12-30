@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/favicon-32x32.png" type="png" sizes="32">
+    <link rel="stylesheet" href="css/launcher.css">
+    <title>Launcher</title>
+    <!--<script crossorigin="anonymous" src="http://localhost:24170/socket.io/socket.io.js"></script>-->
+    <script crossorigin="anonymous" src="https://cdn.socket.io/4.5.4/socket.io.min.js" integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"></script>    
+    <!--<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js" ></script>-->
+</head>
+<body>
+    <div id="containner">
+        <h2>Dispositivos Conectados</h2>
+        <hr>
+    </div>
+    <script>
+        let data = [];
+        /*
+        if ( document.getElementById('discovery') ){
+              document.getElementById('discovery').remove();
+              //console.log('DIV borrado.');              
+        }
+        let div = document.createElement('div');
+        div.id = 'discovery';
+
+        let datos = <%#-JSON.parse(JSON.stringify(data))%>;
+        //console.log(JSON.stringify(datos));
+        window.localStorage.setItem('datos', JSON.stringify(datos));
+        if (datos.length > 0){            
+            datos.map((e)=>{
+              console.log('device: '+JSON.stringify(e.name));                                
+              div.innerHTML += '<p>'+e.name.replaceAll('_', ' ').trim()+'</p>';                                
+          });        
+          document.getElementById('devices').appendChild(div);
+        }
+        */        
+        var socket = io.connect("http://192.168.2.158:24180", { forceNew: true });
+        
+        socket.on("conectedDevices", function (datos) {          
+          data = datos;  
+          localStorage.setItem('arrayDevices', JSON.stringify(data));
+
+          if ( document.getElementById('devices') ){
+              document.getElementById('devices').remove();
+              //console.log('DIV borrado.');
+          }
+          let div = document.createElement('div');
+          div.id = 'devices'
+
+          console.log('Datos: '+JSON.stringify(data));          
+          data.map((elem)=>{
+              console.log('device: '+JSON.stringify(elem));                                
+              div.innerHTML += `<form action="/dashboard" method="post"><input type="text" name="deviceName" value=${elem.name} style="display: none;"><input type="submit" id="btn-device" value=${elem.name.replace(/_/g, '').trim()}><br></form>`;
+          });        
+          document.getElementById('containner').appendChild(div);
+          
+        });
+        //console.log('filtro: '+<%#-JSON.stringify(data)%>);
+        //socket.emit('filtereds', <%#-JSON.stringify(data)%>);
+               
+    </script>
+</body>
+</html>
