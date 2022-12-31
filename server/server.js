@@ -40,7 +40,8 @@ var fs = require('fs');
 fs.readFile('arrayData.json', (err, data)=>{
   if (!err) {
     if (data != undefined && data != null && data != '') {
-        arrayDevices = JSON.parse(data);
+      console.log('arrayData: '+JSON.stringify(data));
+      arrayDevices = JSON.parse(data);
     }
     arrayDevices.map((elem) => {
       console.log('Device connected: '+elem.name);

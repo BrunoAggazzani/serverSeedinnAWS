@@ -25,10 +25,12 @@ export const showDevices = (req, res, next) => {
                 reject(err);
             } else {
                 let array = [];
-                JSON.parse(data).map((e)=>{
-                    //console.log('e: '+JSON.stringify(e));
-                    array.push(e);
-                })
+                if (data != undefined && data != null && data != '') {
+                    JSON.parse(data).map((e)=>{
+                        //console.log('e: '+JSON.stringify(e));
+                        array.push(e);
+                    });
+                }                
                 setTimeout(() => {
                     resolve(array);
                 }, 500);            
