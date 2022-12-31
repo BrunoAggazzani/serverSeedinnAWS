@@ -1,3 +1,4 @@
+import MqttClient from 'mqtt/lib/client.js';
 import app from './app.js';
 const server = require("http").Server(app);
 const ioS = require("socket.io")(server);
@@ -54,14 +55,14 @@ fs.readFile('arrayData.json', (err, data)=>{
 
 
 
-export const clientMQTT = mqtt.connect('mqtt://192.168.2.158:9000');
+export const clientMQTT = mqtt.connect('mqtt://23.21.58.124:9000');
 //export const clientMQTT = mqtt.connect('mqtt://localhost:9000', opts);
 
 clientMQTT.on('connect', ()=>{  
     if (clientMQTT.connected) {        
         clientMQTT.subscribe('mqtt/demo/connected/res/#');
         clientMQTT.subscribe('mqtt/demo/disconnected/res/#');
-        //clientMQTT.subscribe('+/estadoBoton');
+        clientMQTT.subscribe('+/estadoBoton');
     }    
 });
 
@@ -124,10 +125,25 @@ clientMQTT.on('message', (topic, message, packet)=>{
       }      
     }
 
-    if (topic == '') {
-      
-    }
+    let subtopic = topic.split('/');
 
+    if (subtopic[1] == 'estadoBoton') {
+      console.log('device:'+subtopic[0]);
+      console.log('estado boton: '+message.toString());
+      ioS.sockets.emit(`${subtopic[0]}`, message.toString());
+    }   
     
 });
-
+/*
+ioS.sockets.on('btnAction', (dato)=>{
+  console.log('dato recibido por socket desde pagina: '+JSON.stringify(dato));
+  //clientMQTT.publish(topic, message)
+});
+*/
+ioS.on("connect",  (socket) => {
+  socket.on('btnAction', (dato)=>{
+  console.log('dato recibido por socket desde pagina: '+JSON.stringify(dato));
+  console.log(`topic: ${dato.device}/btnAction dato: ${dato.btn}`);
+  clientMQTT.publish(`${dato.device}/botonAction`, `${dato.btn}`);
+  });
+});

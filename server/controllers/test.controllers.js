@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 var mime = require('mime');
-import { clientMQTT } from "../server.js";
+//import { clientMQTT } from "../server.js";
 //const file = require('../../files/');
 
 
@@ -61,6 +61,9 @@ export const showDevices = (req, res, next) => {
 
 export const loadDashboard = (req, res) => {
     let deviceName = {name: req.body.deviceName};
+    console.log('device name: '+deviceName.name);
+    
+    
     res
         .header('Access-Control-Allow-Origin', '*')
         .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")

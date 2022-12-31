@@ -37,7 +37,7 @@
           document.getElementById('devices').appendChild(div);
         }
         */        
-        var socket = io.connect("http://192.168.2.158:24180", { forceNew: true });
+        var socket = io.connect("http://localhost:24180", { forceNew: true });
         
         socket.on("conectedDevices", function (datos) {          
           data = datos;  
@@ -56,7 +56,6 @@
               div.innerHTML += `<form action="/dashboard" method="post"><input type="text" name="deviceName" value=${elem.name} style="display: none;"><input type="submit" id="btn-device" value=${elem.name.replace(/_/g, '').trim()}><br></form>`;
           });        
           document.getElementById('containner').appendChild(div);
-          
         });
         //console.log('filtro: '+<%#-JSON.stringify(data)%>);
         //socket.emit('filtereds', <%#-JSON.stringify(data)%>);

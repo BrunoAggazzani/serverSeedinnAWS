@@ -17,24 +17,74 @@
             <h2>Tablero de control de <%= data.name.replaceAll('_', '') %> </h2>
             <hr>
             <div id="buttons">
-                <button id="btn1" class="btn-off" onclick="click('btn1')">PRESS</button>
+                <button id="btn1" class="btn-off" onclick="clickon(this.id, this.className)">ON/OFF</button>
                 <br>
-                <button id="btn2" class="btn-off" onclick="click('btn2')">PRESS</button>
+                <button id="btn2" class="btn-off" onclick="clickon(this.id, this.className)">ON/OFF</button>
                 <br>
-                <button id="btn3" class="btn-off" onclick="click('btn3')">PRESS</button>
+                <button id="btn3" class="btn-off" onclick="clickon(this.id, this.className)">ON/OFF</button>
                 <br>
             </div>
         </div>
     </div>
     <script>
-        var socket = io.connect("http://localhost:24180", { forceNew: true });
-        socket.emit('device', '<%=data.name%>');
-        function click(btn) {
-            if (btn == 'btn1'){
-                socket.emit('btnAction', {device: <%=data.name%>, btn: btn});
+        const socket = io.connect("http://localhost:24180", { forceNew: true });
+        
+        socket.on('<%=data.name%>', function (dato) {
+            console.log(dato);
+            if(dato == 'off1'){
+                document.getElementById('btn1').setAttribute("class", "btn-off");
+            }
+            if (dato == 'on1') {
+                document.getElementById('btn1').setAttribute("class", "btn-on");
+            }
+        
+            if (dato == 'off2') {
+                document.getElementById('btn2').setAttribute("class", "btn-off");
+            }
+            if (dato == 'on2') {
+                document.getElementById('btn2').setAttribute("class", "btn-on");
+            }
+
+            if (dato == 'off3') {
+                document.getElementById('btn3').setAttribute("class", "btn-off");
+            }
+            if (dato == 'on3') {
+                document.getElementById('btn3').setAttribute("class", "btn-on");
+            }
+        });
+
+
+        function clickon(id, className) {
+            console.log(id);
+            console.log(className);
+            if (id == 'btn1'){
+                if (className == 'btn-off') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'on1' });
+                }
+                if (className == 'btn-on') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off1' });
+                }
+            }
+
+            if (id == 'btn2') {
+                if (className == 'btn-off') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'on2' });
+                }
+                if (className == 'btn-on') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off2' });
+                }
+            }
+
+            if (id == 'btn3') {
+                if (className == 'btn-off') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'on3' });
+                }
+                if (className == 'btn-on') {
+                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off3' });
+                }
             }
         }
-
+        
     </script>
 </body>
 
