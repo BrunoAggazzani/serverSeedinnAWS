@@ -39,7 +39,7 @@ let arrayDevices = [];
 var fs = require('fs');
 fs.readFile('arrayData.json', (err, data)=>{
   if (!err) {
-    if (data != undefined && data != null && data != '' && data.length > 0) {
+    if (data != undefined && data != null && data != '') {
         arrayDevices = JSON.parse(data);
     }
     arrayDevices.map((elem) => {
