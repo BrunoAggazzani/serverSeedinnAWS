@@ -1,3 +1,4 @@
 /node_modules
 /server/DB/connect.js
 /package-lock.json
+/arrayData.json
