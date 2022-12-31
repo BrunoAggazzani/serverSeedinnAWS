@@ -37,6 +37,7 @@ const opts = {
 let arrayDevices = [];
 
 var fs = require('fs');
+/*
 fs.readFile('arrayData.json', (err, data)=>{
   if (!err) {
     if (data != undefined && data != null && data != '') {
@@ -52,6 +53,7 @@ fs.readFile('arrayData.json', (err, data)=>{
     });
   }
 });
+*/
 
 
 
