@@ -82,7 +82,7 @@ clientMQTT.on('message', (topic, message, packet)=>{
             ////ioS.on("connection",  (socket) => {
             ////  socket.emit("conectedScales", arrayDevices);
             ////});            
-          }, 500);
+          }, 1000);
           arrayDevices.map((elem) => {
             console.log('Device connected: '+elem.name);
           });
@@ -110,7 +110,7 @@ clientMQTT.on('message', (topic, message, packet)=>{
             ////ioS.on("connection",  (socket) => {
             ////  socket.emit("conectedScales", arrayDevices);
             ////});            
-          }, 500);
+          }, 200);
           arrayDevices.map((elem) => {
             console.log('Device connected: '+elem.name);
           });
@@ -144,7 +144,7 @@ ioS.sockets.on('btnAction', (dato)=>{
 ioS.on("connect",  (socket) => {
   socket.on('btnAction', (dato)=>{
   console.log('dato recibido por socket desde pagina: '+JSON.stringify(dato));
-  console.log(`topic: ${dato.device}/btnAction dato: ${dato.btn}`);
+  console.log(`topic: ${dato.device}/btnAction, dato: ${dato.btn}`);
   clientMQTT.publish(`${dato.device}/botonAction`, `${dato.btn}`);
   });
 });

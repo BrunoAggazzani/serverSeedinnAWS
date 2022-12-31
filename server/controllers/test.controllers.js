@@ -18,7 +18,7 @@ export const login = (req, res, next) => {
 
 
 export const showDevices = (req, res, next) => {
-    /* 
+     
     const readArray = new Promise((resolve, reject) => {
         fs.readFile(path.resolve(__dirname, '../../arrayData.json'), (err, data) => {
             if (err){
@@ -35,26 +35,23 @@ export const showDevices = (req, res, next) => {
             }        
         });
     });
-*/
-/*
+
+
     readArray
     .then((data) => {
         let filtro = req.body.user;
         let datos = data.filter((elem) => elem.owner.toUpperCase() == filtro.toUpperCase());
         //console.log('data: '+JSON.stringify(datos));        
         res
-            .header('Access-Control-Allow-Origin', '*')
-            .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
-            .status(200).render('launcher.ejs', {data: JSON.stringify(datos)});            
+        .header('Access-Control-Allow-Origin', '*')
+        .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
+        .status(200).render('launcher.ejs');            
     })
     .catch((err)=>{
         console.log('Error: '+err);
     }); 
-*/
-    res
-        .header('Access-Control-Allow-Origin', '*')
-        .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
-        .status(200).render('launcher.ejs');                       
+
+                           
 }    
 
 
