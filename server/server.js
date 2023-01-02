@@ -40,7 +40,7 @@ var fs = require('fs');
 fs.readFile('arrayData.json', (err, data)=>{
   if (!err) {
     if (data != undefined && data != null && data != '') {
-      console.log('arrayData: '+JSON.stringify(data));
+      //console.log('arrayData: '+JSON.stringify(data));
       arrayDevices = JSON.parse(data);
     }
     arrayDevices.map((elem) => {
@@ -76,8 +76,14 @@ clientMQTT.on('message', (topic, message, packet)=>{
       let Message = MessageSTR.split('{');
       if (Message.length > 1) {
           console.log(JSON.parse(message).name+' se ha conectado por topico '+topic);
-          let scale = JSON.parse(message);
-          arrayDevices.push(scale);
+          let device = JSON.parse(message);
+          let esp = device.name.split('_');
+          if (esp[0] == 'ESP') {
+            arrayDevices.push(device);
+          } else {
+            console.log('No se agrega este dispositivo al array.')
+          }
+          arrayDevices.push(device);
           setTimeout(() => {
             ioS.sockets.emit("conectedDevices", arrayDevices);            
             ////ioS.on("connection",  (socket) => {
@@ -104,8 +110,8 @@ clientMQTT.on('message', (topic, message, packet)=>{
       let Message = MessageSTR.split('{');
       if (Message.length > 1) {
           console.log(JSON.parse(message).name+' se ha desconectado!!!');
-          let scale = JSON.parse(message);
-          arrayDevices = arrayDevices.filter((elem) => elem.name != scale.name);
+          let device = JSON.parse(message);
+          arrayDevices = arrayDevices.filter((elem) => elem.name != device.name);
           setTimeout(() => {
             ioS.sockets.emit("conectedDevices", arrayDevices);            
             ////ioS.on("connection",  (socket) => {
