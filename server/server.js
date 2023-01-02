@@ -83,7 +83,6 @@ clientMQTT.on('message', (topic, message, packet)=>{
           } else {
             console.log('No se agrega este dispositivo al array.')
           }
-          arrayDevices.push(device);
           setTimeout(() => {
             ioS.sockets.emit("conectedDevices", arrayDevices);            
             ////ioS.on("connection",  (socket) => {
