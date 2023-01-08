@@ -10,15 +10,12 @@
 </head>
 <body>
     <div class="form-containner">
-        <form action="/showDevices" method="post">
-            <label for="user">User</label>
-            <input type="text" id="user" name="user">
-            <br>
-            <label for="pass">Password</label>
-            <input type="text" id="pass" name="pass">
-            <br>
-            <br>            
-            <input type="submit" value="Accept">
+        <form class="form-login" action="/showDevices" method="post">               
+            <input class="input-login" type="text" id="user" name="user" placeholder="Usuario">
+            
+            <input class="input-login" type="password" id="pass" name="pass" placeholder="Contraseña">
+            
+            <input class="submit-login" type="submit" value="Aceptar">
         </form>
     </div>    
 </body>

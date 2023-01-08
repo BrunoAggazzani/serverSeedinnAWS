@@ -6,16 +6,60 @@ body {
     height: 100vh;
     margin: 0%;
     padding: 0%;
-    background-color: rgba(44, 97, 99, 0.993);
+    /*background-color: rgba(44, 97, 99, 0.993);*/
+    background-image: url('../imagenes/fondo_1366x768.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .form-containner {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 33%;
-    height: 33%;
+    width: 45%;
+    height: 45%;
+    padding: 20px;
+    box-shadow: inset 0 0 2em rgba(0, 0, 0, 0.4), 0 0 0 1px rgb(255, 255, 255), 1.3em 1.3em 1em rgba(0, 0, 0, 0.3);
+    filter: brightness(0.9);
+    border-radius: 0.3em;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    width: 70%;
+    height: 70%;
+}
+
+.input-login{
+    display: block;
+    border: none;
+    border-bottom: solid 1px darkseagreen;
+    outline: none;
+}
+
+.submit-login{
+    display: block;
+    border: none;
+    color: #2b6e2b;
+    background-color: white;
+    box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.4), 0 0 0 1px rgb(255, 255, 255), 0.3em 0.3em 0.5em rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    border-radius: 0.3em;
+}
+
+.submit-login:hover {
+    display: block;
+    border: none;
     color: white;
+    background-color: darkseagreen;
+    box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.4), 0 0 0 1px rgb(255, 255, 255), 0.3em 0.3em 0.5em #3b993bdb;
+    margin-bottom: 20px;
+    cursor: pointer;
 }

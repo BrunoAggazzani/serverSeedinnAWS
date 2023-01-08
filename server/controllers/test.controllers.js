@@ -17,28 +17,29 @@ export const login = (req, res, next) => {
 
 
 
-export const showDevices = (req, res, next) => {
-     
-    const readArray = new Promise((resolve, reject) => {
-        fs.readFile(path.resolve(__dirname, '../../arrayData.json'), (err, data) => {
-            if (err){
-                reject(err);
-            } else {
-                let array = [];
-                if (data != undefined && data != null && data != '') {
-                    JSON.parse(data).map((e)=>{
-                        //console.log('e: '+JSON.stringify(e));
-                        array.push(e);
-                    });
-                }                
-                setTimeout(() => {
-                    resolve(array);
-                }, 500);            
-            }        
-        });
+const readArray = new Promise((resolve, reject) => {
+    fs.readFile(path.resolve(__dirname, '../../arrayData.json'), (err, data) => {
+        if (err){
+            reject(err);
+        } else {
+            let array = [];
+            if (data != undefined && data != null && data != '') {
+                JSON.parse(data).map((e)=>{
+                    //console.log('e: '+JSON.stringify(e));
+                    array.push(e);
+                });
+            }                
+            setTimeout(() => {
+                resolve(array);
+            }, 500);            
+        }        
     });
+});
 
 
+
+export const showDevices = (req, res, next) => {
+    
     readArray
     .then((data) => {
         let filtro = req.body.user;
@@ -51,18 +52,14 @@ export const showDevices = (req, res, next) => {
     })
     .catch((err)=>{
         console.log('Error: '+err);
-    }); 
-
-                           
+    });                           
 }    
 
 
 
 export const loadDashboard = (req, res) => {
     let deviceName = {name: req.body.deviceName};
-    console.log('device name: '+deviceName.name);
-    
-    
+    console.log('device name: '+deviceName.name);    
     res
         .header('Access-Control-Allow-Origin', '*')
         .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
