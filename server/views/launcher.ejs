@@ -18,6 +18,7 @@
     </div>
     <script>
         let data = [];
+        let user = '';
         /*
         if ( document.getElementById('discovery') ){
               document.getElementById('discovery').remove();
@@ -41,22 +42,43 @@
         const socket = io.connect("http://54.173.224.62:24180", { forceNew: true });        
         
         socket.on("conectedDevices", function (datos) {          
-          data = datos;  
+          data = datos;
+          user = <%-JSON.stringify(data.user)%>;
+          user.replace('"', '');
+          console.log('user: '+user);  
           localStorage.setItem('arrayDevices', JSON.stringify(data));
 
           if ( document.getElementById('devices') ){
               document.getElementById('devices').remove();
               //console.log('DIV borrado.');
-          }
+          }          
           let div = document.createElement('div');
           div.id = 'devices'
 
-          console.log('Datos: '+JSON.stringify(data));          
+          console.log('Datos: '+JSON.stringify(data));
+
+          if (user.toUpperCase() == 'BRUNO') {
+          data = data.filter((elem) => elem.owner.toUpperCase() == user.toUpperCase() && elem.name != 'ESP_24101'); // cambiar a ESP_24101
+          console.log('Dispositivos para BRUNO: '+JSON.stringify(data));
+          }
+          if (user.toUpperCase() == 'BELU') {
+          data = data.filter((elem) => elem.owner.toUpperCase() == 'BRUNO' && elem.name == 'ESP_24101'); // cambiar a ESP_24101
+          console.log('Dispositivos para BELU: '+JSON.stringify(data));
+          }
+          if (user.toUpperCase() != 'BELU' && user.toUpperCase() != 'BRUNO') {
+          data = data.filter((elem) => elem.owner.toUpperCase() == user.toUpperCase());
+          console.log('Dispositivos: '+JSON.stringify(data));
+          }
+
+          console.log('Datos filtrados: '+JSON.stringify(data));
+
           data.map((elem)=>{
-              console.log('device: '+JSON.stringify(elem));                                
+            //if (){
+              console.log('device: ' + JSON.stringify(elem));
               div.innerHTML += `<form action="/dashboard" method="post"><input type="text" name="deviceName" value=${elem.name} style="display: none;"><input type="submit" id="btn-device" value=${elem.name.replace(/_/g, '').trim()}><br></form>`;
-          });        
-          document.getElementById('containner').appendChild(div);
+              document.getElementById('containner').appendChild(div);
+            //}
+          });          
         });
         //console.log('filtro: '+<%#-JSON.stringify(data)%>);
         //socket.emit('filtereds', <%#-JSON.stringify(data)%>);

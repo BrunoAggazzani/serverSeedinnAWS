@@ -80,27 +80,25 @@ clientMQTT.on('message', (topic, message, packet)=>{
           let esp = device.name.split('_');
           if (esp[0] == 'ESP') {
             arrayDevices.push(device);
+            setTimeout(() => {
+              ioS.sockets.emit("conectedDevices", arrayDevices);            
+              ////ioS.on("connection",  (socket) => {
+              ////  socket.emit("conectedScales", arrayDevices);
+              ////});            
+            }, 1000);
+            arrayDevices.map((elem) => {
+              console.log('Connected Devices: '+elem.name);
+            });          
+            fs.writeFile('arrayData.json', JSON.stringify(arrayDevices), (err) => {
+              if (!err) {
+                console.log('Se sobreescribió el archivo arrayData.json');
+              }
+            });
           } else {
-            console.log('No se agrega este dispositivo al array.')
-          }
-          setTimeout(() => {
-            ioS.sockets.emit("conectedDevices", arrayDevices);            
-            ////ioS.on("connection",  (socket) => {
-            ////  socket.emit("conectedScales", arrayDevices);
-            ////});            
-          }, 1000);
-          arrayDevices.map((elem) => {
-            console.log('Device connected: '+elem.name);
-          });
-        
-          fs.writeFile('arrayData.json', JSON.stringify(arrayDevices), (err) => {
-            if (!err) {
-              console.log('Se sobreescribió el archivo arrayData.json');
-            }
-          });
-        
+            console.log('No se agrega este dispositivo al array porque no es un dispositivo que nos interese.');
+          }       
       } else {
-        console.log(message+' no modifica array porque no posee un ID valido.');
+        console.log(message+' no modifica arrayData.json porque no posee un ID valido.');
       }      
     }
 
@@ -110,25 +108,28 @@ clientMQTT.on('message', (topic, message, packet)=>{
       if (Message.length > 1) {
           console.log(JSON.parse(message).name+' se ha desconectado!!!');
           let device = JSON.parse(message);
-          arrayDevices = arrayDevices.filter((elem) => elem.name != device.name);
-          setTimeout(() => {
-            ioS.sockets.emit("conectedDevices", arrayDevices);            
-            ////ioS.on("connection",  (socket) => {
-            ////  socket.emit("conectedScales", arrayDevices);
-            ////});            
-          }, 200);
-          arrayDevices.map((elem) => {
-            console.log('Device connected: '+elem.name);
-          });
-          
-          fs.writeFile('arrayData.json', JSON.stringify(arrayDevices), (err) => {
-            if (!err) {
-              console.log('Se sobreescribió el archivo arrayData.json');
-            }
-          });
-          
+          let esp = device.name.split('_');
+          if (esp[0] == 'ESP') {
+              arrayDevices = arrayDevices.filter((elem) => elem.name != device.name);
+              setTimeout(() => {
+                ioS.sockets.emit("conectedDevices", arrayDevices);            
+                ////ioS.on("connection",  (socket) => {
+                ////  socket.emit("conectedScales", arrayDevices);
+                ////});            
+              }, 1000);
+              arrayDevices.map((elem) => {
+                console.log('Device connected: '+elem.name);
+              });          
+              fs.writeFile('arrayData.json', JSON.stringify(arrayDevices), (err) => {
+                if (!err) {
+                  console.log('Se sobreescribió el archivo arrayData.json');
+                }
+              });
+          } else {
+            console.log('No se elimina este dispositivo porque nunca fue agregado al array.');
+          }          
       } else {
-        console.log(message+' no modifica array porque no posee un ID valido.');
+        console.log(message+' no modifica arrayData.json porque no posee un ID valido.');
       }      
     }
 

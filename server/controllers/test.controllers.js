@@ -1,3 +1,5 @@
+import { isNull } from 'util';
+
 const fs = require('fs');
 const path = require("path");
 var mime = require('mime');
@@ -8,14 +10,42 @@ var mime = require('mime');
   
 
 export const login = (req, res, next) => {
-    console.log('Launching page...');       
+    console.log('Launching page...');
+    let mje = {};
+    if (req.data) {
+        console.log('req.data: '+req.data);
+        mje = {
+            message: req.data
+        } 
+    } else {
+        mje = {
+            message: ''
+        }
+    }           
     res
     .header('Access-Control-Allow-Origin', '*')
     .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
-    .status(200).render('login.ejs');                
+    .status(200).render('login.ejs', {data: mje});                
 }
 
-
+const readArrayUsers = new Promise((resolve, reject) => {
+    fs.readFile(path.resolve(__dirname, '../../arrayUsers.json'), (err, data) => {
+        if (err){
+            reject(err);
+        } else {
+            let array = [];
+            if (data != undefined && data != null && data != '') {
+                JSON.parse(data).map((e)=>{
+                    //console.log('e: '+JSON.stringify(e));
+                    array.push(e);
+                });
+            }                
+            setTimeout(() => {
+                resolve(array);
+            }, 500);            
+        }        
+    });
+});
 
 const readArray = new Promise((resolve, reject) => {
     fs.readFile(path.resolve(__dirname, '../../arrayData.json'), (err, data) => {
@@ -36,23 +66,109 @@ const readArray = new Promise((resolve, reject) => {
     });
 });
 
-
+const validateUser = (users, user, pass) => {
+    let logedSuccess = {};
+    users.map((u)=>{
+        console.log('Buscando coincidencia para '+u.user+' con '+user+' y '+u.pass+' con '+pass);
+        if (u.user === user && u.pass === pass) {
+            console.log('Coincidencia encontrada!!!');
+            //validation = true;
+            logedSuccess = {
+                user: u.user,
+                pass: u.pass
+            };
+            console.log('logedSuccess: '+logedSuccess.user+' y '+logedSuccess.pass);
+            
+        }
+    });
+    return logedSuccess;    
+};
 
 export const showDevices = (req, res, next) => {
-    
+    /*
     readArray
-    .then((data) => {
-        let filtro = req.body.user;
-        let datos = data.filter((elem) => elem.owner.toUpperCase() == filtro.toUpperCase());
-        //console.log('data: '+JSON.stringify(datos));        
-        res
-        .header('Access-Control-Allow-Origin', '*')
-        .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
-        .status(200).render('launcher.ejs');            
+    .then((devices) => {
+    */    
+        let user = req.body.user; // usuario logeado y
+        let pass = req.body.pass; // password logeado en "login.ejs"
+        /*
+        let validation = false;
+        let logedSuccess = {
+            user: '',
+            pass: ''
+        };
+        */
+        readArrayUsers
+        .then((users) => { // valido usuario y pass.
+            let datos = validateUser(users, user, pass);
+            console.log(JSON.stringify(datos));
+            if (datos != null && datos != undefined) {
+                console.log('Usuario logeado exitosamente: '+datos.user);
+                res
+                .header('Access-Control-Allow-Origin', '*')
+                .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
+                .status(200).render('launcher.ejs', {data: datos});
+            } else {
+                console.log('Redireccionando a login...');
+                let mje = {
+                    message: 'Usuario y/o contraseña incorrectos!'
+                }        
+                res
+                .header('Access-Control-Allow-Origin', '*')
+                .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
+                .status(200).render('login.ejs', {data: mje});
+            }            
+        })
+        /*
+        .then((validation)=>{
+            if (validation) {
+                if (logedSuccess.user != '' && logedSuccess.user == 'BRUNO') {
+                    let datos = devices.filter((elem) => elem.owner.toUpperCase() == logedSuccess.user && elem.name != 'ESP_24102'); // cambiar a ESP_24101
+                    console.log('Dispositivos para BRUNO: '+JSON.stringify(datos));
+                }
+                if (logedSuccess.user != '' && logedSuccess.user == 'BELU') {
+                    let datos = devices.filter((elem) => elem.owner.toUpperCase() == 'BRUNO' && elem.name == 'ESP_24102'); // cambiar a ESP_24101
+                    console.log('Dispositivos para BELU: '+JSON.stringify(datos));
+                }
+                if (logedSuccess.user != '' && logedSuccess.user != 'BELU' && logedSuccess.user != 'BRUNO') {
+                    let datos = devices.filter((elem) => elem.owner.toUpperCase() == logedSuccess.user);
+                    console.log('Dispositivos: '+JSON.stringify(datos));
+                }                    
+                res
+                .header('Access-Control-Allow-Origin', '*')
+                .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
+                .status(200).render('launcher.ejs', {data: datos}); 
+            } else {
+                // Redireccionar a login y enviar datos para alert que informe de contraseña incorrecta.
+                console.log('Redireccionando a login...');
+                let mje = {
+                    message: 'Usuario y/o contraseña incorrectos!'
+                }        
+                res
+                .header('Access-Control-Allow-Origin', '*')
+                .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
+                .status(200).render('login.ejs', {data: mje});
+            }
+        })
+        */
+        .catch((err)=>{
+            console.log('readArrayUsers Error: '+err);
+        });                            
+    /*
     })
     .catch((err)=>{
-        console.log('Error: '+err);
-    });                           
+        console.log('readArray Error: '+err);
+        console.log('Error leyendo array de dispositivos!');
+        // Redireccionar a login y enviar datos para alert que informe de que se produjo un error buscando dispositivos conectados.
+        let mje = {
+            message: 'Se produjo un error buscando dispositivos conectados para este usuario.'
+        }        
+        res
+        .header('Access-Control-Allow-Origin', '*')
+        .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
+        .status(200).render('login.ejs', {data: mje});
+    });
+    */                           
 }    
 
 

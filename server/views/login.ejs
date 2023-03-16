@@ -9,6 +9,12 @@
     <title>login</title>
 </head>
 <body>
+    <script>
+        if (<%=data.message != ''%>) {
+            console.log('Usuario y/o contraseña incorrectos!');
+            alert(<%-JSON.stringify(data.message)%>);
+        }
+    </script>
     <div class="form-containner">
         <form class="form-login" action="/showDevices" method="post">               
             <input class="input-login" type="text" id="user" name="user" placeholder="Usuario" >            
