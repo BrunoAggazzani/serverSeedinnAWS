@@ -4,21 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="imagenes/favicon-32x32.png" type="png" sizes="32">
+    <!--<link rel="icon" href="imagenes/favicon-32x32.png" type="png" sizes="32">-->
     <link rel="stylesheet" href="css/login.css">
     <title>login</title>
 </head>
 <body>
-    <script>
-        if (<%=data.message != ''%>) {
-            console.log('Usuario y/o contraseña incorrectos!');
-            alert(<%-JSON.stringify(data.message)%>);
-        }
-    </script>
     <div class="form-containner">
         <form class="form-login" action="/showDevices" method="post">               
-            <input class="input-login" type="text" id="user" name="user" placeholder="Usuario" >            
-            <input class="input-login" type="password" id="pass" name="pass" placeholder="Contraseña" >            
+            <input class="input-login" type="text" id="user" name="user" placeholder="Usuario" required>            
+            <input class="input-login" type="password" id="pass" name="pass" placeholder="Contraseña" required>            
             <input class="submit-login" type="submit" value="Aceptar" >
         </form>
     </div>    

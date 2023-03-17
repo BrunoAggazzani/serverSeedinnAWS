@@ -10,22 +10,11 @@ var mime = require('mime');
   
 
 export const login = (req, res, next) => {
-    console.log('Launching page...');
-    let mje = {};
-    if (req.data) {
-        console.log('req.data: '+req.data);
-        mje = {
-            message: req.data
-        } 
-    } else {
-        mje = {
-            message: ''
-        }
-    }           
+    console.log('Launching login page...');           
     res
     .header('Access-Control-Allow-Origin', '*')
     .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
-    .status(200).render('login.ejs', {data: mje});                
+    .status(200).render('login.ejs');                
 }
 
 const readArrayUsers = new Promise((resolve, reject) => {
@@ -46,7 +35,7 @@ const readArrayUsers = new Promise((resolve, reject) => {
         }        
     });
 });
-
+/*
 const readArray = new Promise((resolve, reject) => {
     fs.readFile(path.resolve(__dirname, '../../arrayData.json'), (err, data) => {
         if (err){
@@ -65,7 +54,7 @@ const readArray = new Promise((resolve, reject) => {
         }        
     });
 });
-
+*/
 const validateUser = (users, user, pass) => {
     let logedSuccess = {};
     users.map((u)=>{
@@ -102,21 +91,18 @@ export const showDevices = (req, res, next) => {
         .then((users) => { // valido usuario y pass.
             let datos = validateUser(users, user, pass);
             console.log(JSON.stringify(datos));
-            if (datos != null && datos != undefined) {
+            if (datos.user != null && datos.user != undefined) {
                 console.log('Usuario logeado exitosamente: '+datos.user);
                 res
                 .header('Access-Control-Allow-Origin', '*')
                 .set("Content-Security-Policy", "script-src 'self' https://cdn.socket.io/4.5.4/socket.io.min.js 'unsafe-inline' 'unsafe-eval'")
                 .status(200).render('launcher.ejs', {data: datos});
             } else {
-                console.log('Redireccionando a login...');
-                let mje = {
-                    message: 'Usuario y/o contraseña incorrectos!'
-                }        
+                console.log('Redireccionando a pagina de error...');        
                 res
                 .header('Access-Control-Allow-Origin', '*')
                 .set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval'")
-                .status(200).render('login.ejs', {data: mje});
+                .status(200).render('error.ejs');               
             }            
         })
         /*
