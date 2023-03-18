@@ -1,3 +1,7 @@
+html {
+    filter: saturate(0.35);
+}
+
 body{
     display: flex;
     justify-content: center;
@@ -5,8 +9,12 @@ body{
     width: 100%;
     height: 100vh;
     margin: 0%;
-    padding: 0%;
-    background-color: rgba(44, 97, 99, 0.993);
+    padding: 0%;    
+    /*background-color: rgba(44, 97, 99, 0.993);*/
+    background-image: url('../imagenes/bg-verificador-precios-V4_edicion2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #containner{
@@ -52,8 +60,10 @@ p{
 }
 
 #btn-device{
-    background-image: radial-gradient( rgb(14, 14, 14), rgb(55, 101, 102));
-    width: 100%;
+    box-shadow: inset 0 0 2em rgba(255, 255, 255, 0.45), 0 0 0 0.3px rgb(18, 118, 87), 0.5em 0.5em 3em rgba(0, 0, 0, 0.85);
+    background-image: radial-gradient( rgb(14, 14, 14), rgb(22, 211, 125));
+    width: 13rem;
+    height: 5rem;
     align-content: center;
     text-align: center;
     color: white;
@@ -61,4 +71,11 @@ p{
     border: none;
     outline: none;
     border-radius: 0.5em;
+    margin: 10px;
+    block-size: auto;
+    font-size: large;
+}
+
+#btn-device:hover{
+    background-image: radial-gradient( rgb(14, 14, 14), rgb(129, 255, 0));
 }

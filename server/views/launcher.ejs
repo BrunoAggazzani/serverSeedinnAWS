@@ -56,7 +56,7 @@
           div.id = 'devices'
 
           console.log('Datos: '+JSON.stringify(data));
-
+          /*
           if (user.toUpperCase() == 'BRUNO') {
           data = data.filter((elem) => elem.owner.toUpperCase() == user.toUpperCase() && elem.name != 'ESP_24101'); // cambiar a ESP_24101
           console.log('Dispositivos para BRUNO: '+JSON.stringify(data));
@@ -69,13 +69,16 @@
           data = data.filter((elem) => elem.owner.toUpperCase() == user.toUpperCase());
           console.log('Dispositivos: '+JSON.stringify(data));
           }
+          */
+
+          data = data.filter((elem) => elem.owner.toUpperCase() == user.toUpperCase());
 
           console.log('Datos filtrados: '+JSON.stringify(data));
 
           data.map((elem)=>{
             //if (){
               console.log('device: ' + JSON.stringify(elem));
-              div.innerHTML += `<form action="/dashboard" method="post"><input type="text" name="deviceName" value=${elem.name} style="display: none;"><input type="submit" id="btn-device" value=${elem.name.replace(/_/g, '').trim()}><br></form>`;
+              div.innerHTML += `<form action="/dashboard" method="post"><input type="text" name="deviceName" value=${elem.name} style="display: none;"><input type="submit" id="btn-device" class="btn-device" value=${elem.name.replace(/_/g, '' ).trim()}><br></form>`;
               document.getElementById('containner').appendChild(div);
             //}
           });          

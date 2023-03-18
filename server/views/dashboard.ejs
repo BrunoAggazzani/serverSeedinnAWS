@@ -16,13 +16,16 @@
         <div id="containner">
             <h2>Tablero de control de <%= data.name.replaceAll('_', '') %> </h2>
             <hr>
-            <div id="buttons">
+            <div id="buttons">                
+                <input type="submit" id="btn1" class="btn-off" onclick="clickon(this.id, this.className)" value="OFF"/>
+                <!--
                 <button id="btn1" class="btn-off" onclick="clickon(this.id, this.className)">LEFT</button>
                 <br>
                 <button id="btn2" class="btn-off" onclick="clickon(this.id, this.className)">RIGHT</button>
                 <br>
                 <button id="btn3" class="btn-off" onclick="clickon(this.id, this.className)">BEEP TEST</button>
                 <br>
+                -->
             </div>
         </div>
     </div>
@@ -34,11 +37,13 @@
             console.log(dato);
             if(dato == 'off1'){
                 document.getElementById('btn1').setAttribute("class", "btn-off");
+                document.getElementById('btn1').value = 'OFF'
             }
             if (dato == 'on1') {
                 document.getElementById('btn1').setAttribute("class", "btn-on");
+                document.getElementById('btn1').value = 'ON'
             }
-        
+        /*
             if (dato == 'off2') {
                 document.getElementById('btn2').setAttribute("class", "btn-off");
             }
@@ -52,6 +57,7 @@
             if (dato == 'on3') {
                 document.getElementById('btn3').setAttribute("class", "btn-on");
             }
+        */    
         });
 
 
@@ -66,24 +72,25 @@
                     socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off1' });
                 }
             }
-
+            /*
             if (id == 'btn2') {
                 if (className == 'btn-off') {
-                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'on2' });
+                    socket.emit('btnAction', { device: '<%#=data.name%>', btn: 'on2' });
                 }
                 if (className == 'btn-on') {
-                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off2' });
+                    socket.emit('btnAction', { device: '<%#=data.name%>', btn: 'off2' });
                 }
             }
 
             if (id == 'btn3') {
                 if (className == 'btn-off') {
-                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'on3' });
+                    socket.emit('btnAction', { device: '<%#=data.name%>', btn: 'on3' });
                 }
                 if (className == 'btn-on') {
-                    socket.emit('btnAction', { device: '<%=data.name%>', btn: 'off3' });
+                    socket.emit('btnAction', { device: '<%#=data.name%>', btn: 'off3' });
                 }
             }
+            */
         }
         
     </script>

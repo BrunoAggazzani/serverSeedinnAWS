@@ -1,3 +1,7 @@
+html {
+    filter: saturate(0.35);
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -6,7 +10,11 @@ body {
     height: 100vh;
     margin: 0%;
     padding: 0%;
-    background-color: rgba(44, 97, 99, 0.993);
+    /*background-color: rgba(44, 97, 99, 0.993);*/
+    background-image: url('../imagenes/bg-verificador-precios-V4_edicion2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #containner {
@@ -29,6 +37,7 @@ body {
 }
 
 h2 {
+    text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -41,27 +50,35 @@ hr {
 }
 
 .btn-off {
-    background-image: radial-gradient( rgb(14, 14, 14), rgb(55, 101, 102));
-    width: 100%;
+    box-shadow: inset 0 0 0em rgb(255 255 255 / 45%), 2px 2px 7px 0px rgb(255, 77, 77), 0.5em 0.5em 3em rgb(0 0 0 / 85%);
+    background-color: rgb(52 52 52 / 85%);
+    width: 13rem;
+    height: 4rem;
     align-content: center;
     text-align: center;
-    color: white;
+    color: rgb(255, 77, 77);
     cursor: pointer;
     border: none;
     outline: none;
-    border-radius: 0.5em;
-    font-weight: bold;
+    border-radius: 0.3em;
+    margin: 40px;
+    font-size: xx-large;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .btn-on {
-    background-image: radial-gradient( rgb(14, 14, 14), rgb(55, 101, 102));
-    width: 100%;
+    box-shadow: inset 0 0 0em rgb(255 255 255 / 45%), 2px 2px 7px 0px rgb(102, 255, 0), 0.5em 0.5em 3em rgb(0 0 0 / 85%);
+    background-color: rgba(52 52 52 / 85%);
+    width: 13rem;
+    height: 4rem;
     align-content: center;
     text-align: center;
-    color: rgb(81, 255, 0);
+    color: rgb(102, 255, 0);
     cursor: pointer;
     border: none;
     outline: none;
-    border-radius: 0.5em;
-    font-weight: bold;
+    border-radius: 0.3em;
+    margin: 40px;
+    font-size: xx-large;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
