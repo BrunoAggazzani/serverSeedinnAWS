@@ -17,15 +17,7 @@
             <h2>Tablero de control de <%= data.name.replaceAll('_', '') %> </h2>
             <hr>
             <div id="buttons">                
-                <input type="submit" id="btn1" class="btn-off" onclick="clickon(this.id, this.className)" value="OFF"/>
-                <!--
-                <button id="btn1" class="btn-off" onclick="clickon(this.id, this.className)">LEFT</button>
-                <br>
-                <button id="btn2" class="btn-off" onclick="clickon(this.id, this.className)">RIGHT</button>
-                <br>
-                <button id="btn3" class="btn-off" onclick="clickon(this.id, this.className)">BEEP TEST</button>
-                <br>
-                -->
+                <input type="submit" id="btn1" class="btn-off" onclick="clickon(this.id, this.className)" value="OFF"/>                
             </div>
         </div>
     </div>
@@ -33,7 +25,7 @@
         //const socket = io.connect("http://localhost:24180", { forceNew: true });
         const socket = io.connect("http://54.173.224.62:24180", { forceNew: true });
         
-        socket.on('<%=data.name%>', function (dato) {
+        socket.on('<%=data.name%>', function (dato) { 
             console.log(dato);
             if(dato == 'off1'){
                 document.getElementById('btn1').setAttribute("class", "btn-off");
