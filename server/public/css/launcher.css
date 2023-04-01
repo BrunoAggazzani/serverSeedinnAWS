@@ -2,7 +2,7 @@ html {
     filter: saturate(0.35);
 }
 
-body{
+.body{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,6 +13,21 @@ body{
     /*background-color: rgba(44, 97, 99, 0.993);*/
     background-image: url('../imagenes/bg-verificador-precios-V4_edicion2.png');
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bodyBelu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0%;
+    padding: 0%;
+    /*background-color: rgba(44, 97, 99, 0.993);*/
+    background-image: url('../imagenes/belu.jpeg');
+    background-position: right top;
     background-repeat: no-repeat;
     background-size: cover;
 }

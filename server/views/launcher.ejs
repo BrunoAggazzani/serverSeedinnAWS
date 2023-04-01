@@ -11,7 +11,7 @@
     <script crossorigin="anonymous" src="https://cdn.socket.io/4.5.4/socket.io.min.js" integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"></script>    
     <!--<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js" ></script>-->
 </head>
-<body>
+<body id='body' class='body'>
     <div id="containner">
         <h2>Dispositivos Conectados</h2>
         <hr>
@@ -19,6 +19,7 @@
     <script>
         let data = [];
         let user = '';
+        let backgroundBody = document.getElementById("body");
         /*
         if ( document.getElementById('discovery') ){
               document.getElementById('discovery').remove();
@@ -47,6 +48,12 @@
           user.replace('"', '');
           console.log('user: '+user);  
           localStorage.setItem('arrayDevices', JSON.stringify(data));
+
+
+          if (user.toUpperCase() == 'BRUNO') {          
+            backgroundBody.setAttribute("class", "bodyBelu");
+          }
+
 
           if ( document.getElementById('devices') ){
               document.getElementById('devices').remove();
